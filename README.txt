@@ -1,6 +1,6 @@
 
-BTWiz is an internal library developed & used by my team in Android Bluetooth 
-projects for the last 3 years,
+BTWiz is an internal library developed & used by my team: www.mobileedge.co.il 
+in Android Bluetooth projects for the last 3 years,
 
 It is hereby released as an open source project.
 
@@ -105,4 +105,6 @@ G. IMPORTANT: at the end of Bluetooth processing a cleanup method should be call
    BTWiz.cleanup()
 
 
--eof
+Gilad Haimov
+gilad@mobileedge.co.il
+  
