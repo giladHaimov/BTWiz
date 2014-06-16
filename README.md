@@ -65,7 +65,7 @@ Simply add BTWiz_xxx.jar to your project's libs/ folder. Make sure your manifest
 
 ### Usage
  * **Initial check for device Bluetooth support**<br/>
-```scala
+```java
 try {
   if (!BTWiz.isEnabled(context)) {
      // TODO call startActivity with BTWiz.enableBTIntent() allowing user to enable BT
