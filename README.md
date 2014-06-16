@@ -47,21 +47,21 @@ BTWiz was designed with the following goals in mind:
 
 BTWiz deals internally with a lot of the Bluetooth initial wiring complexities which are so easy to get wrong even for an experienced Bluetooth developers:
 
- * **Device Support**<br/>
+ * **Bluetooth Support**<br/>
    It Force you to check if the device support Bluetooth and, if not, whether or not the user may enable Bluetooth on device.
- * **Delayed Discovery**<br/>
-   It makes is the default to query the paired device list to see if the desired device is already known, before performing full blown discovery.
+ * **Efficient Discovery**<br/>
+   BTWiz starts device detection by querying the paired device list to see if the desired device is already known, before performing full blown discovery.
  * **Secure as Default**<br/>
    It will provide you with the correct default (SECURE) when connecting to another device and will allow you, but only in a manifest manner, to prefer non-secure communication.
  * **Connection Failover**<br/>
-   It internally implements a (messy but effective) fall-through mechanism that solves many of the connection problems our team, and others, have encountered. This mechanism involves getting a list of supported UUIDs (different handling for < apiVer 15 andf >= apiVer 15 devices) and, if failed, reverting to default SPP UUID = "00001101-0000-1000-8000-00805F9B34FB" and,  if all other fails, attempts to activate "createRfcommSocket" service by reflection.
+   BTWiz internally implements a (messy but effective) fall-through mechanism that solves many of the connection problems our team, and others, have encountered. This mechanism involves getting a list of supported UUIDs (which is implemented differently pre- and post- ICS versions) and, if failed, reverting to default SPP UUID 00001101-0000-1000-8000-00805F9B34FB. If all that fails, the mechanism then attempts to activate hidden method createRfcommSocket() by reflection.
 
 
-Using BTWize saves us a significant amount of time and error-handling. You are now free to enjoy these benefits in your own Bluetooth apps.
+Using BTWize saves us a significant amount of time and error-handling. We encourage you to enjoy these benefits in your next Android Bluetooth project.
 
 
 ### Installation
-Simply add BTWiz_v1.2.jar to your project's libs/ folder. Additionally make sure your manifest contains BLUETOOTH permission and, if admin-level ops are used, also BLUETOOTH_ADMIN permission.
+Simply add BTWiz_v**.jar to your project's libs/ folder. Make sure your manifest contains BLUETOOTH permission and, if admin-level ops are used, also BLUETOOTH_ADMIN permission.
 
 ### Usage
  * **Initial check for device Bluetooth support**<br/>
