@@ -88,7 +88,7 @@ The built in DeviceMajorComparator should suffice for many real life tasks.
 
 DISCOVER_IF_NEEDED is a boolean flag that, if set to true, will move to performing discovery if the looked-for device is not in bonded device list.
 
- * **Discover all nearbye devices**<br/>
+ * **Discover all nearby devices**<br/>
 ```scala
 BTWiz.startDiscoveryAsync(context, completeListener, deviceDiscoveredListener);
 ```
