@@ -28,7 +28,7 @@
 -->
 <!--- <p align="center"><img src="http://o-n2.com/scaloid_logo.png"></p> -->
 
-# BTWiz for asynchronouse Bluetooth in Android
+# BTWiz: Async Bluetooth Lib for Android
 
 BTWiz is an internal library developed & used by my team: www.mobileedge.co.il in Android Bluetooth projects for the last 3 years.
 It is hereby released as an open source project.
