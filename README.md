@@ -79,7 +79,7 @@ try {
 
  * **Look for a device**<br/>
   Start with the bonded device list and optionally continue to discovery:
-```scala
+```java
 BTWiz.lookupDeviceAsync(context, comparator, lookupListener, DISCOVER_IF_NEEDED);
 ```
 
@@ -89,7 +89,7 @@ The built in DeviceMajorComparator should suffice for many real life tasks.
 DISCOVER_IF_NEEDED is a boolean flag that, if set to true, will move to performing discovery if the looked-for device is not in bonded device list.
 
  * **Discover all nearby devices**<br/>
-```scala
+```java
 BTWiz.startDiscoveryAsync(context, completeListener, deviceDiscoveredListener);
 ```
 deviceDiscoveredListener will be called for each newly discovered device
@@ -97,7 +97,7 @@ completeListener will be called when action is completed
 
  * **Establish a Bluetooth server**<br/>
  And accept() new connections
-```scala
+```java
 BTWiz.listenForConnectionsAsync("MyServerName", acceptListener, secureMode);
 ```
 If secureMode equals SECURE - a secure RFCOMM Bluetooth socket will be used.
@@ -105,12 +105,12 @@ Else: an insecure RFCOMM Bluetooth socket.
 
 
  * **Get list of all bonded device**<br/>
-```scala
+```java
 Set<BluetoothDevice> arr = BTWiz.getAllBondedDevices(context);
 ```
 
  * **Perform asynchronous IO**<br/>
-```scala
+```java
 BTSocket.readAsync()
 BTSocket.writeAsync();
 ```
@@ -118,7 +118,7 @@ Where BTSocket is a wrapper to the standard Bluetooth socket and is mainly used 
 
  * **Cleanup**<br/>
 IMPORTANT: at the end of Bluetooth processing a cleanup method should be called.
-```scala
+```java
 BTWiz.cleanup();
 ```
 
