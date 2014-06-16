@@ -54,7 +54,7 @@ BTWiz deals internally with a lot of the Bluetooth initial wiring complexities w
  * **Secure as Default**<br/>
    It will provide you with the correct default (SECURE) when connecting to another device and will allow you, but only in a manifest manner, to prefer non-secure communication.
  * **Connection Failover**<br/>
-   BTWiz internally implements a (messy but effective) fall-through mechanism that solves many of the connection problems our team, and others, have encountered. This mechanism involves getting a list of supported UUIDs (which is implemented differently pre- and post- ICS versions) and, if failed, reverting to default SPP UUID 00001101-0000-1000-8000-00805F9B34FB. If all that fails, the mechanism then attempts to activate hidden method createRfcommSocket() by reflection.
+   BTWiz uses a messy but effective fall-through mechanism that solves many of the connection problems our team, as well as others, have encountered. This mechanism involves getting a list of supported UUIDs (which is implemented differently pre- and post- ICS versions) and, if failed, reverting to default SPP UUID 00001101-0000-1000-8000-00805F9B34FB. If that fails, it then attempts to activate hidden method createRfcommSocket() by reflection.
 
 
 Using BTWize saves us a significant amount of time and error-handling. We encourage you to enjoy these benefits in your next Android Bluetooth project.
@@ -95,7 +95,7 @@ BTWiz.startDiscoveryAsync(context, completeListener, deviceDiscoveredListener);
 deviceDiscoveredListener will be called for each newly discovered device
 completeListener will be called when action is completed
 
- * **Become a Bluetooth server**<br/>
+ * **Establish a Bluetooth server**<br/>
  And accept() new connections
 ```scala
 BTWiz.listenForConnectionsAsync("MyServerName", acceptListener, secureMode);
@@ -104,7 +104,7 @@ If secureMode equals SECURE - a secure RFCOMM Bluetooth socket will be used.
 Else: an insecure RFCOMM Bluetooth socket.
 
 
- * **Get a list of all bonded device**<br/>
+ * **Get list of all bonded device**<br/>
 ```scala
 Set<BluetoothDevice> arr = BTWiz.getAllBondedDevices(context);
 ```
