@@ -1,4 +1,5 @@
 
+
 BTWiz is an internal library developed & used by my team: www.mobileedge.co.il 
 in Android Bluetooth projects for the last 3 years,
 
