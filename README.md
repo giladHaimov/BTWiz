@@ -26,7 +26,7 @@
  * under the License.
  */
 -->
-<!--- <p align="center"><img src="http://o-n2.com/scaloid_logo.png"></p> -->
+<p align="center"><img src="http://o-n2.com/scaloid_logo.png"></p> 
 
 # BTWiz: Async Bluetooth Lib for Android
 
