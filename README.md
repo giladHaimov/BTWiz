@@ -61,7 +61,7 @@ Using BTWize saves us a significant amount of time and error-handling. We encour
 
 
 ### Installation
-Simply add BTWiz_<version>.jar to your project's libs/ folder. Make sure your manifest contains BLUETOOTH permission and, if admin-level ops are used, also BLUETOOTH_ADMIN permission.
+Simply add BTWiz_xxx.jar to your project's libs/ folder. Make sure your manifest contains BLUETOOTH permission and, if admin-level ops are used, also BLUETOOTH_ADMIN permission.
 
 ### Usage
  * **Initial check for device Bluetooth support**<br/>
