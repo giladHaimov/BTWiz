@@ -277,7 +277,7 @@ public class BTWiz {
 					}
 					
 					// failover 2: use createRfcommSocket via reflection
-					sock = createRfcommSocketViaReflection(device);
+					sock = createRfcommSocketViaReflection(device, secureMode);
 					if (sock == null) {
 						connectionListener.onConnectionError(null, "createRfcommSocket");
 						return; // failed
@@ -295,9 +295,22 @@ public class BTWiz {
 	}
 	
 	
-	protected static BluetoothSocket createRfcommSocketViaReflection(BluetoothDevice device) {
-		try { 
-			Method createMethod = device.getClass().getMethod("createRfcommSocket", new Class[] {int.class});
+	protected static BluetoothSocket createRfcommSocketViaReflection(BluetoothDevice device, SecureMode secureMode) {
+		try {
+			// see http://stackoverflow.com/questions/14906721/android-bluetooth-connection-refused 
+			// for explanation of call to createRfcommSocketToServiceRecord 
+			// device.createRfcommSocketToServiceRecord(uuid);
+
+			Method createMethod;
+			if (secureMode == SecureMode.SECURE) {
+				createMethod = device.getClass().getMethod("createRfcommSocket", new Class[] {int.class });
+			}
+			else {			
+				createMethod = device.getClass().getMethod("createInsecureRfcommSocket", new Class[] { int.class });
+			}
+			if (createMethod == null) {
+				throw new RuntimeException("createMethod not found");
+			}
 			BluetoothSocket sock = (BluetoothSocket)createMethod.invoke(device, 1);
 			if (sock==null) {
 				throw new RuntimeException("createRfcommSocket activation failed");

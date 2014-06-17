@@ -77,7 +77,7 @@ try {
 }
 ```
 
- * **Look for a device**<br/>
+ * **Device lookup**<br/>
   Start with the bonded device list and optionally continue to discovery:
 ```java
 BTWiz.lookupDeviceAsync(context, comparator, lookupListener, DISCOVER_IF_NEEDED);
