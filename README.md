@@ -74,6 +74,8 @@ Simply add BTWiz_xxx.jar to your project's libs/ folder. Make sure your manifest
 ### Usage
  * **Initial check for device Bluetooth support**<br/>
 ```java
+
+
 try {
   if (!BTWiz.isEnabled(context)) {
      // TODO call startActivity with BTWiz.enableBTIntent() allowing user to enable BT
@@ -83,6 +85,8 @@ try {
    // TODO disable Bluetooth functionality in your app
    return;
 }
+
+
 ```
 
  * **Device lookup**<br/>
@@ -98,36 +102,49 @@ DISCOVER_IF_NEEDED is a boolean flag that, if set to true, will move to performi
 
  * **Discover all nearby devices**<br/>
 ```java
+
 BTWiz.startDiscoveryAsync(context, completeListener, deviceDiscoveredListener);
+
 ```
+
 deviceDiscoveredListener will be called for each newly discovered device
 completeListener will be called when action is completed
 
  * **Establish a Bluetooth server**<br/>
  And accept() new connections
 ```java
+
 BTWiz.listenForConnectionsAsync("MyServerName", acceptListener, secureMode);
+
 ```
+
 If secureMode equals SECURE - a secure RFCOMM Bluetooth socket will be used.
 Else: an insecure RFCOMM Bluetooth socket.
 
 
  * **Get list of all bonded device**<br/>
 ```java
+
 Set<BluetoothDevice> arr = BTWiz.getAllBondedDevices(context);
+
 ```
 
  * **Perform asynchronous IO**<br/>
 ```java
+
 BTSocket.readAsync()
 BTSocket.writeAsync();
+
 ```
+
 Where BTSocket is a wrapper to the standard Bluetooth socket and is mainly used to allow asynchronous IO over the connected/accepted socket.
 
  * **Cleanup**<br/>
 IMPORTANT: at the end of Bluetooth processing a cleanup method should be called.
 ```java
+
 BTWiz.cleanup();
+
 ```
 
 ### Code Example
