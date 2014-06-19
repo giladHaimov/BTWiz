@@ -28,12 +28,20 @@
 -->
 <p align="center"><img src="http://i.imgur.com/c6NmMh8.jpg"></p>
 
-# BTWiz: Async Bluetooth Lib for Android
+# BTWiz - Async Bluetooth for Android
+
+### Abstract
 
 BTWiz is an internal library developed & used by my team: www.mobileedge.co.il in Android Bluetooth projects for the last 3 years.
 It is hereby released as an open source project.
 
 For licensing details please visit http://www.apache.org/licenses/LICENSE-2.0
+
+If you wish to comment on/contribute to BTWiz, feel free to contact me directly.
+
+Gilad Haimov
+gilad@MobileEdge.co.il
+
 
 
 ### Benefits
@@ -92,7 +100,9 @@ try {
  * **Device lookup**<br/>
   Start with the bonded device list and optionally continue to discovery:
 ```java
+
 BTWiz.lookupDeviceAsync(context, comparator, lookupListener, DISCOVER_IF_NEEDED);
+
 ```
 
 Comparator is used to identify a device and must implement IDeviceComparator.
@@ -154,8 +164,8 @@ Taken from BTWiz test class<br/><br/>
 	/**
 	 * Test looking up and connecting to a single device, identified by major number & name, via getBTDeviceAsync.
 	 * Note that if device is not part of the bonded list a discovery process will be initiated.
-	 *  Set name to null to disable comparison by name    
-	 *  Set major to -1 to disable comparison by major    
+	 *  Set name to null to disable comparison by name
+	 *  Set major to -1 to disable comparison by major
 	 */
 	public static void connectToDevice(final Context context, final int major, 
 			final String name, final SecureMode secureMode, final UUID serviceUuid) { 		
@@ -182,7 +192,7 @@ Taken from BTWiz test class<br/><br/>
 				// or synchronous read() & write()
 				Log.d("Tester", "Connected to new device"); 
 			}
-		}; 
+		};
 		
 
 		// declare a connecting listener
@@ -208,7 +218,7 @@ Taken from BTWiz test class<br/><br/>
 		 
 		final boolean DISCOVER_IF_NEEDED = true; // start discovery if device not found in bonded-devices list 
 		DeviceMajorComparator comparator = new DeviceMajorComparator(major, name);
-		
+
 		BTWiz.lookupDeviceAsync(context, comparator, lookupListener, DISCOVER_IF_NEEDED);
 		
 		// TODO call BTWiz.cleanup() at end of BT processing 
@@ -352,6 +362,3 @@ Taken from BTWiz test class<br/><br/>
 
 ```
 
-
-Gilad Haimov
-gilad@mobileedge.co.il

@@ -276,7 +276,7 @@ public class BTWiz {
 						}
 					}
 					
-					// failover 2: use createRfcommSocket via reflection
+					// failover 2: use createRfcommSocket via reflection 
 					sock = createRfcommSocketViaReflection(device, secureMode);
 					if (sock == null) {
 						connectionListener.onConnectionError(null, "createRfcommSocket");
