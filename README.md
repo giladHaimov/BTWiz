@@ -28,7 +28,7 @@
 -->
 <p align="center"><img src="http://i.imgur.com/c6NmMh8.jpg"></p>
 
-# BTWiz - Async Bluetooth for Android
+# BTWiz: Async Bluetooth Lib for Android
 
 ### Abstract
 
