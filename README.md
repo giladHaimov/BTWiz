@@ -56,13 +56,13 @@ BTWiz deals internally with a lot of the Bluetooth initial wiring complexities w
  * **Connection Failover**<br/>
    BTWiz uses highly effective fall-through mechanism that solves many of the BT connection
    problems encountered by our team as well as others. It involves:<br/>
-   If in SECURE mode create socket via createRfcommSocketToServiceRecord<br/>
-   If in INSECURE mode create socket via createInsecureRfcommSocketToServiceRecord<br/>
-   For API versions >= 15 call device.getUuids() to get supported features<br/>
-   For API versions < 15 attempt to activate "getUuids" via java reflection<br/>
-   If the above failed, re-attempt connection using the default SSP = "00001101-0000-1000-8000-00805F9B34FB"<br/>
-   If the above failed in SECURE mode activate by reflection "createRfcommSocket" to create socket<br/>
-   If the above failed in INSECURE mode activate by reflection "createInsecureRfcommSocket" to create socket<br/>
+   - If in SECURE mode create socket via createRfcommSocketToServiceRecord<br/>
+   - If in INSECURE mode create socket via createInsecureRfcommSocketToServiceRecord<br/>
+   - For API versions >= 15 call device.getUuids() to get supported features<br/>
+   - For API versions < 15 attempt to activate "getUuids" via java reflection<br/>
+   - If the above failed, re-attempt connection using the default SSP = "00001101-0000-1000-8000-00805F9B34FB"<br/>
+   - If the above failed in SECURE mode activate by reflection "createRfcommSocket" to create socket<br/>
+   - If the above failed in INSECURE mode activate by reflection "createInsecureRfcommSocket" to create socket<br/>
 
 
 Using BTWize saves us a significant amount of time and error-handling. We encourage you to enjoy these benefits in your next Android Bluetooth project.
