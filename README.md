@@ -35,6 +35,8 @@
 BTWiz is an internal library developed & used by my team: www.mobileedge.co.il in Android Bluetooth projects for the last 3 years.
 It is hereby released as an open source project.
 
+Using BTWiz saves us a significant amount of time and error-handling when kickstarting a n ew Bluetooth project. We encourage you to enjoy these benefits in your next Bluetooth-enabled app.
+
 For licensing details please visit http://www.apache.org/licenses/LICENSE-2.0
 
 If you wish to comment on/contribute to BTWiz, feel free to contact me directly.
@@ -73,8 +75,6 @@ BTWiz deals internally with a lot of the Bluetooth initial wiring complexities w
    - If the above failed in SECURE mode activate by reflection "createRfcommSocket" to create socket<br/>
    - If the above failed in INSECURE mode activate by reflection "createInsecureRfcommSocket" to create socket<br/>
 
-
-Using BTWize saves us a significant amount of time and error-handling. We encourage you to enjoy these benefits in your next Android Bluetooth project.
 
 
 ### Installation
