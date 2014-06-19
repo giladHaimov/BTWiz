@@ -39,8 +39,9 @@ For licensing details please visit http://www.apache.org/licenses/LICENSE-2.0
 
 If you wish to comment on/contribute to BTWiz, feel free to contact me directly.
 
-Gilad Haimov
+Gilad Haimov<br/>
 gilad@MobileEdge.co.il
+<br/>
 
 
 
