@@ -56,7 +56,7 @@ BTWiz deals internally with a lot of the Bluetooth initial wiring complexities w
  * **Connection Failover**<br/>
    BTWiz uses highly effective fall-through mechanism that solves many of the BT connection
    problems encountered by our team as well as others. It involves:
- * ***xxx***<br/>
+ ** **xxx**<br/>
 
 
 Using BTWize saves us a significant amount of time and error-handling. We encourage you to enjoy these benefits in your next Android Bluetooth project.
