@@ -55,7 +55,7 @@ BTWiz deals internally with a lot of the Bluetooth initial wiring complexities w
    It will provide you with the correct default (SECURE) when connecting to another device and will allow you, but only in a manifest manner, to prefer non-secure communication.
  * **Connection Failover**<br/>
    BTWiz uses highly effective fall-through mechanism that solves many of the BT connection
-   problems encountered by our team as well as others. It involves:<br/>
+   problems encountered by our team as well as others and roughly follows the following lines<br/>
    - If in SECURE mode create socket via createRfcommSocketToServiceRecord<br/>
    - If in INSECURE mode create socket via createInsecureRfcommSocketToServiceRecord<br/>
    - For API versions >= 15 call device.getUuids() to get supported features<br/>
@@ -130,7 +130,211 @@ IMPORTANT: at the end of Bluetooth processing a cleanup method should be called.
 BTWiz.cleanup();
 ```
 
+### Code Example
+ * **Taken from BTWiz test class**<br/>
+```java
+
+	/**
+	 * Test looking up and connecting to a single device, identified by major number & name, via getBTDeviceAsync.
+	 * Note that if device is not part of the bonded list a discovery process will be initiated.
+	 *  Set name to null to disable comparison by name    
+	 *  Set major to -1 to disable comparison by major    
+	 */
+	public static void connectToDevice(final Context context, final int major, 
+			final String name, final SecureMode secureMode, final UUID serviceUuid) { 		
+		try {
+			if (!BTWiz.isEnabled(context)) {
+				// TODO call startActivity with BTWiz.enableBTIntent() allowing user to enable BT
+				return; 
+			}
+		} catch (DeviceNotSupportBluetooth e) {
+			// TODO disable BT functionality in your app
+			return; 
+		}
+		
+		final IDeviceConnectionListener deviceConnectionListener = new IDeviceConnectionListener() {			
+			@Override
+			public void onConnectionError(Exception exception, String where) {
+				// TODO handle connection error
+				Log.e("Tester", "Connection error: " + exception + " at " + where);  
+			}			
+			@Override
+			public void onConnectSuccess(BTSocket clientSocket) {
+				// TODO work with new connection e.g. using
+				// async IO methods: readAsync() & writeAsync()
+				// or synchronous read() & write()
+				Log.d("Tester", "Connected to new device"); 
+			}
+		}; 
+		
+
+		// declare a connecting listener
+		IDeviceLookupListener lookupListener = new IDeviceLookupListener() {
+			@Override
+			public boolean onDeviceFound(BluetoothDevice device, boolean byDiscovery) {
+				// log
+				String name = device.getName();
+				String addr = device.getAddress();
+				int major = device.getBluetoothClass().getMajorDeviceClass();
+				String majorStr = Utils.majorToString(major);
+				Log.d("Tester", "Discovered device: " + name + ", " + addr + ", " + majorStr);				
+				// and connect to the newly found device
+				BTWiz.connectAsClientAsync(context, device, deviceConnectionListener, secureMode, serviceUuid); 
+				return false; // and terminate discovery
+			}
+			@Override
+			public void onDeviceNotFound(boolean byDiscovery) {
+				// TODO handle discovery failure
+				Log.d("Tester", "Failed to discover device"); 				
+			}
+		}; 
+		 
+		final boolean DISCOVER_IF_NEEDED = true; // start discovery if device not found in bonded-devices list 
+		DeviceMajorComparator comparator = new DeviceMajorComparator(major, name);
+		
+		BTWiz.lookupDeviceAsync(context, comparator, lookupListener, DISCOVER_IF_NEEDED);
+		
+		// TODO call BTWiz.cleanup() at end of BT processing 
+	}
+
+	
+	/**
+	 * Retrieves a list of all currently bonded devices (no discovery)
+	 */
+	public static void getAllBondedDevices(final Context context) {		
+		try {
+			if (!BTWiz.isEnabled(context)) { 
+				// TODO call startActivity with BTWiz.enableBTIntent() allowing user to enable BT
+				return;
+			}
+		} catch (DeviceNotSupportBluetooth e) {
+			// TODO disable BT functionality in your app
+			return;
+		}
+		
+		Set<BluetoothDevice> allBondedDevices = BTWiz.getAllBondedDevices(context);
+		
+		if (allBondedDevices != null) {
+			int num = allBondedDevices.size();
+			Log.d("Tester", num + " bonded devices were found");
+			for (BluetoothDevice device: allBondedDevices) {
+				// TODO do something with device
+				String name = device.getName();
+				String addr = device.getAddress();
+				int major = device.getBluetoothClass().getMajorDeviceClass();
+				String majorStr = Utils.majorToString(major);
+				Log.d("Tester", "Bonded device: " + name + ", " + addr + ", " + majorStr);				
+			}
+		}
+		else {
+			// error had occurred 
+		}
+		
+		// TODO call BTWiz.cleanup() at end of BT processing 
+	}
+
+		
+	/**
+	 * Run discovery and returns a list of all discovered devices
+	 */
+	public static void discoverNearbyDevices(final Context context) {		
+		try {
+			if (!BTWiz.isEnabled(context)) {
+				// TODO call startActivity with BTWiz.enableBTIntent() allowing user to enable BT
+				return; 
+			}
+		} catch (DeviceNotSupportBluetooth e) {
+			// TODO disable BT functionality in your app
+			return; 
+		}
+		
+		
+		final MarkCompletionListener completeListener = new MarkCompletionListener(); 
+		final GetAllDevicesListener deviceDiscoveredListener = new GetAllDevicesListener(); 
+		
+		boolean started = BTWiz.startDiscoveryAsync(context, completeListener, deviceDiscoveredListener);				
+		if (!started) {
+			// TODO handle discovery error
+			return; 
+		}
+		
+
+		
+		// start a thread that will block until discovery has completed. 
+		// note: this is for demonstration only. standard apps should typically 
+		// create a IDeviceLookupListener implementation class to handle each new discovered
+		// device as it arrives and not block a thread until discovery completion   
+		new Thread() {
+			public void run() {
+				completeListener.blockUntilCompletion(); 				
+				// and iterate results
+				ArrayList<BluetoothDevice> allDiscoveredDevices = deviceDiscoveredListener.getAll(); 
+				for (BluetoothDevice device: allDiscoveredDevices) {
+					String name = device.getName();
+					String addr = device.getAddress();
+					int major = device.getBluetoothClass().getMajorDeviceClass();
+					String majorStr = Utils.majorToString(major);
+					Log.d("Tester", "Discovered device: " + name + ", " + addr + ", " + majorStr); 
+				}
+				
+				BTWiz.cleanup(context); // cleanup BT resources
+				
+			};
+		}.start();	 	
+	}
+	
+
+	/**
+	 * Test becoming a BT server and accept()ing new connections
+	 * If secureMode equals SECURE: listenUsingRfcommWithServiceRecord will be internally activated
+	 * Else: listenUsingInsecureRfcommWithServiceRecord
+	 */
+	public static void listenForConnections(final Context context, SecureMode secureMode) {		
+		try {
+			if (!BTWiz.isEnabled(context)) {
+				// TODO call startActivity with BTWiz.enableBTIntent() allowing user to enable BT
+				return;
+			}
+		} catch (DeviceNotSupportBluetooth e) {
+			// TODO disable BT functionality in your app
+			return;
+		}
+
+		IAcceptListener acceptListener = new IAcceptListener() {			
+			@Override
+			public void onNewConnectionAccepted(BTSocket newConnection) {
+				// log
+				BluetoothDevice device = newConnection.getRemoteDevice(); 
+				String name = device.getName();
+				String addr = device.getAddress();
+				int major = device.getBluetoothClass().getMajorDeviceClass();
+				String majorStr = Utils.majorToString(major);
+				Log.d("Tester", "New connection: " + name + ", " + addr + ", " + majorStr);
+				
+				// TODO work with new connection e.g. using
+				// async IO methods: readAsync() & writeAsync()
+				// or synchronous read() & write()
+			} 
+			@Override
+			public void onError(Exception e, String where) {
+				// TODO handle error
+				Log.e("Tester", "Connection error " + e + " at " + where);
+			}
+		};
+		
+		BTWiz.listenForConnectionsAsync("MyServerName", acceptListener, secureMode);
+		
+		Log.d("Tester", "Async listener activated"); 
+
+		// Note: to terminate listen session call BTWiz.stopListening()
+		
+		// TODO call BTWiz.cleanup() at end of BT processing 
+	}
+
+
+
+```
+
 
 Gilad Haimov
 gilad@mobileedge.co.il
-  
