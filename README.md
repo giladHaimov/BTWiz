@@ -131,7 +131,7 @@ BTWiz.cleanup();
 ```
 
 ### Code Example
- * **Taken from BTWiz test class**<br/>
+Taken from BTWiz test class<br/><br/>
 ```java
 
 	/**
@@ -149,7 +149,7 @@ BTWiz.cleanup();
 			}
 		} catch (DeviceNotSupportBluetooth e) {
 			// TODO disable BT functionality in your app
-			return; 
+			return;
 		}
 		
 		final IDeviceConnectionListener deviceConnectionListener = new IDeviceConnectionListener() {			
@@ -201,7 +201,7 @@ BTWiz.cleanup();
 	/**
 	 * Retrieves a list of all currently bonded devices (no discovery)
 	 */
-	public static void getAllBondedDevices(final Context context) {		
+	public static void getAllBondedDevices(final Context context) {
 		try {
 			if (!BTWiz.isEnabled(context)) { 
 				// TODO call startActivity with BTWiz.enableBTIntent() allowing user to enable BT
@@ -227,7 +227,7 @@ BTWiz.cleanup();
 			}
 		}
 		else {
-			// error had occurred 
+			// error had occurred
 		}
 		
 		// TODO call BTWiz.cleanup() at end of BT processing 
